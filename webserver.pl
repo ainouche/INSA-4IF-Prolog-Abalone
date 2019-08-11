@@ -17,7 +17,7 @@
 :- use_module(library(http/http_files)).
 :- use_module(library(http/http_json)).
 :- use_module(library(http/json_convert)).
-:- use_module(library(http/http_mime_plugin)).
+%:- use_module(library(http/http_mime_plugin)).
 
 :- use_module('modules/board').
 :- use_module('modules/movable').
@@ -78,7 +78,7 @@ getPlayerMovementsAction(Request) :-
     DataStruct=json(['Board'=Board,'Player'=Player,'Line'=Line,'Col'=Col,'Debug'=Debug]),
     (
         (
-            Debug == @true,
+            Debug== @(true),
             findall(
                 [NextLine, NextCol, NodeValue],
                 (
@@ -130,11 +130,11 @@ checkGameIsOver(Request) :-
     (
        (
            gameOver:gameOver(Player, Board),
-           JSONOut=json([ 'isOver' = @true ])
+           JSONOut=json([ 'isOver'= @(true) ])
        )
        ;
        (
-           JSONOut=json([ 'isOver' = @false ])
+           JSONOut=json([ 'isOver'= @(false) ])
        )
     ),
     reply_json(JSONOut).
